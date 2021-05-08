@@ -4,3 +4,5 @@
 #define full
 #define repeat() while(msgProc())
 #define pause() while(msgProc()){}
+#define width
+#define height

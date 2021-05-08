@@ -6,8 +6,7 @@ void gmain() {
     window(1920, 1080, full);
 
     while (notQuit) {
-        clear();
-        
+
     }
 }
 
@@ -67,33 +66,30 @@ void gmain() {
     //爆発データ
     struct EXPLOSION {
         float px, py, angle, scale;
-        int counter = -1, interval;
+        int interval, counter = -1;
     };
-    const int numExplosions = 60;
+    const int numExplosions = 30;
     struct EXPLOSION e[numExplosions];
     int triggerCnt = 0;
-    //画像番号配列
+    int triggerInterval = 5;
+    //画像データ
     const int numImgs = 54;
     int imgs[numImgs];
-    //画像読み込み
     for (int i = 0; i < numImgs; i++) {
         char filename[32];
         sprintf_s(filename, "assets\\explosion\\a%02d.png", i);
         imgs[i] = loadImage(filename);
     }
-    //メインループ
     ShowCursor(false);
     while (notQuit) {
-        //爆発スタート
-        ++triggerCnt %= 7;
+        //爆発開始
+        ++triggerCnt %= triggerInterval;
         if (triggerCnt == 0) {
             for (int i = 0; i < numExplosions; i++) {
                 if (e[i].counter == -1) {
-                    float cx = width / 2;
-                    float cy = height / 2;
-                    e[i].px = random(cx - 300, cx + 300);
-                    e[i].py = random(cy - 200, cy + 200);
-                    e[i].angle = random(6.28f);
+                    e[i].px = random(width / 2 - 150, width / 2 + 150);
+                    e[i].py = random(height / 2 - 100, height / 2 + 100);
+                    e[i].angle = random(3.14f * 2);
                     e[i].scale = random(5.0f, 10.0f);
                     e[i].interval = random(1, 3);
                     e[i].counter = 0;
@@ -101,10 +97,10 @@ void gmain() {
                 }
             }
         }
-        //爆発中
+        //爆発進行
         for (int i = 0; i < numExplosions; i++) {
             if (e[i].counter >= 0) {
-                e[i].counter++;
+                ++e[i].counter;
                 //爆発終了
                 if (e[i].counter >= e[i].interval * numImgs) {
                     e[i].counter = -1;
@@ -112,7 +108,7 @@ void gmain() {
             }
         }
         //描画
-        clear(60, 120, 210);
+        clear(60, 120, 240);
         rectMode(CENTER);
         for (int i = 0; i < numExplosions; i++) {
             if (e[i].counter >= 0) {
