@@ -4,9 +4,9 @@
 #include"libOne.h"
 void gmain() {
     window(1920, 1080, full);
-
+    
     while (notQuit) {
-
+    
     }
 }
 
@@ -73,7 +73,7 @@ void gmain() {
     int triggerCnt = 0;
     int triggerInterval = 5;
     //‰æ‘œƒf[ƒ^
-    const int numImgs = 54;
+    const int numImgs = 60;
     int imgs[numImgs];
     for (int i = 0; i < numImgs; i++) {
         char filename[32];
